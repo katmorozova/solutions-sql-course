@@ -15,12 +15,35 @@ RIGHT OUTER JOIN DEPARTMENTS b ON a.LOCATION_ID = b.LOCATION_ID
 ORDER BY a.LOCATION_ID;
 
 --solution #3
+--a)
+SELECT EMPLOYEE_ID, FIRST_NAME, 
+        LAST_NAME, JOB_ID,
+        SALARY, DEPARTMENT_ID
+FROM EMPLOYEES;
 
-/*3. Задание состоит из 4-х последовательных этапов.
-а) Из таблицы EMPLOYEES выберите данные только по полям: EMPLOYEE_ID, FIRST_NAME, LAST_NAME, JOB_ID, SALARY, DEPARTMENT_ID.
-б) К результату, полученному на этапе А, добавьте после поля SALARY следующие поля из таблицы JOBS: MIN_SALARY, MAX_SALARY.
-в) К результату, полученному на этапе Б, после поля DEPARTMENT_ID добавьте поле DEPARTMENT_NAME из таблицы DEPARTMENTS.
-г) Из результата, полученного на этапе В, оставьте только те строки, где фактическая зарплата сотрудника (SALARY) 
-в два или более раза превышает минимально возможную зарплату по данной позиции (MIN_SALARY).
-*/
+--b)
+SELECT a.EMPLOYEE_ID, a.FIRST_NAME, 
+        a.LAST_NAME, a.JOB_ID,
+        a.SALARY, b.MIN_SALARY, 
+        b.MAX_SALARY, a.DEPARTMENT_ID
+FROM EMPLOYEES a
+LEFT OUTER JOIN JOBS b ON a.JOB_ID = b.JOB_ID;
+
+--c)
+SELECT a.EMPLOYEE_ID, a.FIRST_NAME, 
+        a.LAST_NAME, a.JOB_ID,
+        a.SALARY, b.MIN_SALARY, 
+        b.MAX_SALARY, a.DEPARTMENT_ID, c.DEPARTMENT_NAME
+FROM EMPLOYEES a
+LEFT OUTER JOIN JOBS b ON a.JOB_ID = b.JOB_ID
+LEFT OUTER JOIN DEPARTMENTS c ON a.DEPARTMENT_ID = c.DEPARTMENT_ID;
+
+--d)
+SELECT a.EMPLOYEE_ID, a.FIRST_NAME, 
+        a.LAST_NAME, a.JOB_ID,
+        a.SALARY, b.MIN_SALARY, 
+        b.MAX_SALARY, a.DEPARTMENT_ID
+FROM EMPLOYEES a
+LEFT OUTER JOIN JOBS b ON a.JOB_ID = b.JOB_ID
+WHERE a.SALARY >= (b.MIN_SALARY *2);
 
